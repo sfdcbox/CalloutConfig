@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Use__c</fullName>
+    <externalId>false</externalId>
+    <label>Use</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Body</fullName>
+                <default>false</default>
+                <label>Body</label>
+            </value>
+            <value>
+                <fullName>Endpoint</fullName>
+                <default>false</default>
+                <label>Endpoint</label>
+            </value>
+            <value>
+                <fullName>Header</fullName>
+                <default>false</default>
+                <label>Header</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

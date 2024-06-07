@@ -71,20 +71,24 @@ public virtual class CalloutService implements ICalloutService {
 		return response;
 	}
 
-	public String getStringFromJsonObjectBody(String token) {
+	private String getStringFromJson(String jsonString, String token) {
 		Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(
-			response.getBody()
+			jsonString
 		);
 		return responseMap.containsKey(token)
 			? (String) responseMap.get(token)
 			: null;
 	}
 
-	public String getStringFromFirstOfJsonListBody(String token) {
+	public String getJSONRespStringByKey(String token) {
+		return getStringFromJson(response.getBody(), token);
+	}
+
+	public String getJSONRespFirstStringByKey(String token) {
 		List<Object> objects = (List<Object>) JSON.deserializeUntyped(
 			response.getBody()
 		);
-		return getStringFromJsonObjectBody(JSON.serialize(objects[0]));
+		return getStringFromJson(JSON.serialize(objects[0]), token);
 	}
 
 	public ICalloutService log() {

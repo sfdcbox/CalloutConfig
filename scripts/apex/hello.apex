@@ -52,10 +52,44 @@ System.debug('short_url  ' + short_url);
 
 
 
-    ICalloutService service = APICalls.newInstance()
+    String type = CalloutConfigService.newInstance()
                             .setApiName('Geocoding API')
                             .setEndpointParameter('q', 'illinois')
-                            .getCalloutService();
+                            .getCalloutService()
+                            .doPost()
+                            .getStringFromFirstOfJsonListBody('type');
+
+    HttpResponse response = CalloutConfigService.newInstance()
+                            .setApiName('Geocoding API')
+                            .setEndpointParameter('q', 'illinois')
+                            .getCalloutService()
+                            .doPost()
+                            .getResponse();
+
+ICalloutService service = CalloutConfigService.newInstance()
+                            .setApiName('Geocoding API')
+                            .setEndpointParameter('q', 'illinois')
+                            .getCalloutService()
+                            .doPost();
+if(service.getResponse().getStatusCode() == 200){
+    System.debug(service.getJSONRespFirstStringByKey('lat'));
+    System.debug(service.getJSONRespFirstStringByKey('lon'));
+}else{
+    //Handle failure
+}
+
+
+    System.debug(response.getStatusCode());
+    if(response.getStatusCode()){
+        System.debug();
+        System.debug();
+    }else{
+        // Failure handling
+    }
+
+
+System.debug('lat >>>>>>>>>   '  + lat);
+
 
         service.doPost();
         if(service.getStatusCode() == )

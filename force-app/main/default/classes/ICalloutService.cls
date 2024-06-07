@@ -12,6 +12,6 @@ public interface ICalloutService {
 	HttpRequest getRequest();
 	HttpResponse getResponse();
 
-	String getStringFromJsonObjectBody(String token);
-	String getStringFromFirstOfJsonListBody(String token);
+	String getJSONRespStringByKey(String key);
+	String getJSONRespFirstStringByKey(String key);
 }

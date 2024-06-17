@@ -5,9 +5,15 @@ public with sharing class CalloutConfigService implements ICalloutConfigService 
 	Map<String, String> endPointParameters;
 	Map<String, String> headerParameters;
 	Map<String, String> jsonBodyParameters;
+	String bodyString;
 
 	public static ICalloutConfigService newInstance() {
 		return (ICalloutConfigService) new CalloutConfigService();
+	}
+
+	public static ICalloutConfigService newInstance(String apiName) {
+		return (ICalloutConfigService) new CalloutConfigService()
+			.setApiName(apiName);
 	}
 
 	public ICalloutConfigService setApiId(Id apiId) {
@@ -41,12 +47,27 @@ public with sharing class CalloutConfigService implements ICalloutConfigService 
 		return this;
 	}
 
+	public ICalloutConfigService setAuthorization(String value) {
+		this.headerParameters.put('Authorization', value);
+		return this;
+	}
+
 	public ICalloutConfigService setJsonBodyParameter(
 		String key,
 		String value
 	) {
 		this.jsonBodyParameters.put(key, value);
 		return this;
+	}
+
+	public ICalloutConfigService setStringBody(String value) {
+		this.bodyString = value;
+		return this;
+	}
+
+	public ICalloutService makeCall() {
+		getCalloutService();
+		return this.service.send();
 	}
 
 	public ICalloutService getCalloutService() {
@@ -90,10 +111,16 @@ public with sharing class CalloutConfigService implements ICalloutConfigService 
 					);
 				}
 				when 'Body' {
-					this.jsonBodyParameters.put(
-						p.Key__c ?? p.Key_Custom__c,
-						p.Value__c ?? p.Value_Encrypted__c ?? p.Value_Custom__c
-					);
+					if (api.Body_Type__c == 'String') {
+						this.bodyString = p.Value__c ?? p.Value_Encrypted__c ??
+							p.Value_Custom__c;
+					} else {
+						this.jsonBodyParameters.put(
+							p.Key__c ?? p.Key_Custom__c,
+							p.Value__c ?? p.Value_Encrypted__c ??
+								p.Value_Custom__c
+						);
+					}
 				}
 				when else {
 					Logger.info(
@@ -132,15 +159,16 @@ public with sharing class CalloutConfigService implements ICalloutConfigService 
 	}
 
 	void addBodyParameters() {
-		if (this.jsonBodyParameters.isEmpty())
-			return;
-
-		this.service.setBody(JSON.serialize(this.jsonBodyParameters));
+		if (String.isNotBlank(this.bodyString)) {
+			this.service.setBody(this.bodyString);
+		} else if (!this.jsonBodyParameters.isEmpty()) {
+			this.service.setBody(JSON.serialize(this.jsonBodyParameters));
+		}
 	}
 
 	API__c getAPI() {
 		return [
-			SELECT Id, Name, Endpoint__c, Method__c
+			SELECT Id, Name, Endpoint__c, Method__c, Body_Type__c
 			FROM API__c
 			WHERE Id = :apiId OR Name = :apiName
 		];

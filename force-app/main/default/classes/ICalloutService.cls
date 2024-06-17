@@ -6,6 +6,7 @@ public interface ICalloutService {
 	ICalloutService setBody(String body);
 	ICalloutService setMethod(String body);
 
+	ICalloutService send();
 	ICalloutService doPost();
 	ICalloutService doGet();
 

@@ -6,7 +6,7 @@ request.setEndpoint('https://api-ssl.bitly.com/v4/shorten');
 request.setMethod('POST');
 request.setHeader('Content-Type', 'application/json');
 request.setHeader('Accept', 'application/json');
-request.setHeader('Authorization', 'Bearer '+'effbd8d27a4d2dfdfc1c9d53e1fc531caaa2e3b5'); //914cc9dfe550495c55a8c88770433d60efa4b098
+request.setHeader('Authorization', 'Bearer '+'effbd8d27a4d2dfdfc1c9d53e1fc531caaa2e3b5');
 request.setBody('{"long_url":"'+long_url+'"}');
 HttpResponse response = http.send(request);
 if (response.getStatusCode() >= 300) {
@@ -19,22 +19,22 @@ System.debug('short_url  ' + short_url);
 
 
 
-    String clientId = 'eb411c01e909e604d45d444ff6509168e714f21e';
-    String clientSecret = '73f6e34aaa8982bfc502b99dca3619d30ba36493';
-    String userName = '*********';
-    String password = '*****';
-    String auth = EncodingUtil.base64Encode(Blob.valueof(clientId + ':' + clientSecret));
-    String body = 'grant_type=password&username='+userName+'&password='+password;
-    ICalloutService service = CalloutService.newInstance()
-                            .setEndPoint('https://api-ssl.bitly.com/oauth/access_token')
-                            .setAuthorization('Basic '+auth)
-                            .setContentType('application/x-www-form-urlencoded')
-                            //.setHeader('Accept', 'application/json')
-                            .setBody(body)
-                            .doPost();
-    System.debug('>>>>>  ' +service.getResponse().getBody());
-                 String token = service.getJSONRespStringByKey('access_token');
-    System.debug('token  ' + token);
+String clientId = 'eb41**************************21e';
+String clientSecret = '73f6******************************a36493';
+String userName = '*********';
+String password = '*****';
+String auth = EncodingUtil.base64Encode(Blob.valueof(clientId + ':' + clientSecret));
+String body = 'grant_type=password&username='+userName+'&password='+password;
+ICalloutService service = CalloutService.newInstance()
+                        .setEndPoint('https://api-ssl.bitly.com/oauth/access_token')
+                        .setAuthorization('Basic '+auth)
+                        .setContentType('application/x-www-form-urlencoded')
+                        //.setHeader('Accept', 'application/json')
+                        .setBody(body)
+                        .doPost();
+System.debug('>>>>>  ' +service.getResponse().getBody());
+                String token = service.getJSONRespStringByKey('access_token');
+System.debug('token  ' + token);
 
 
 
@@ -49,9 +49,17 @@ System.debug('short_url  ' + short_url);
     System.debug('token  ' + token);
 
 
-    CalloutConfigService.newInstance()
-                            .setApiName('Bitly Token')
-                            .
+
+
+    String token = CalloutConfigService.newInstance('Bitly Token').makeCall().getResponse().getBody();
+    String long_url = 'https://www.sfdcbox.com/2022/11/looping-of-asynchronousapex-calls-from.html';
+    ICalloutService service = CalloutConfigService.newInstance('Bitly Shorten')
+                                                    .setAuthorization('Bearer '+token)
+                                                    .setJsonBodyParameter('long_url', long_url)
+                                                    .makeCall();
+    if(service.getResponse().getStatusCode() == 200){
+        System.debug(service.getJSONRespStringByKey('link'));
+    }
 
 
 

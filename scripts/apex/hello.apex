@@ -6,10 +6,10 @@ request.setEndpoint('https://api-ssl.bitly.com/v4/shorten');
 request.setMethod('POST');
 request.setHeader('Content-Type', 'application/json');
 request.setHeader('Accept', 'application/json');
-request.setHeader('Authorization', 'Bearer '+token);
+request.setHeader('Authorization', 'Bearer '+'effbd8d27a4d2dfdfc1c9d53e1fc531caaa2e3b5'); //914cc9dfe550495c55a8c88770433d60efa4b098
 request.setBody('{"long_url":"'+long_url+'"}');
 HttpResponse response = http.send(request);
-if (response.getStatusCode() != 201) {
+if (response.getStatusCode() >= 300) {
     System.debug('shortening failed: ' + response.getStatusCode() + ' ' + response.getStatus());
 } else {
     Map<String, Object> bitlyResponseMap = (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
@@ -17,10 +17,12 @@ if (response.getStatusCode() != 201) {
 }
 System.debug('short_url  ' + short_url);
 
+
+
     String clientId = 'eb411c01e909e604d45d444ff6509168e714f21e';
     String clientSecret = '73f6e34aaa8982bfc502b99dca3619d30ba36493';
-    String userName = 'sfdc.gsk@gmail.com';
-    String password = 'gsk@301AKS';
+    String userName = '*********';
+    String password = '*****';
     String auth = EncodingUtil.base64Encode(Blob.valueof(clientId + ':' + clientSecret));
     String body = 'grant_type=password&username='+userName+'&password='+password;
     ICalloutService service = CalloutService.newInstance()
@@ -31,8 +33,26 @@ System.debug('short_url  ' + short_url);
                             .setBody(body)
                             .doPost();
     System.debug('>>>>>  ' +service.getResponse().getBody());
-                 String token = service.getStringBodyToken('access_token');
+                 String token = service.getJSONRespStringByKey('access_token');
     System.debug('token  ' + token);
+
+
+
+    
+    String body = 'grant_type=password&username{!$Credential.Username}&password={!$Credential.Password}';
+    ICalloutService service = CalloutService.newInstance()
+                            .setEndPoint('callout:Bitly')
+                            .setBody(body)
+                            .doPost();
+    System.debug('>>>>>  ' +service.getResponse().getBody());
+                 String token = service.getJSONRespStringByKey('access_token');
+    System.debug('token  ' + token);
+
+
+    CalloutConfigService.newInstance()
+                            .setApiName('Bitly Token')
+                            .
+
 
 
 

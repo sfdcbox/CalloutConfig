@@ -2,7 +2,7 @@
 
 The Callout Config is a framework concept to optimize all apex callouts within an organization. Its goals are to minimize the overall code needed for callouts, eliminate code redundancy, and enhance both maintainability and scalability.
 
-It's intended to complement Named Credentials and doesn't propose any alternatives to the features provided by Named Credentials. Named credentials can be further be configured in this framework to make things more configurable.
+It's intended to complement Named Credentials and doesn't propose any alternatives to the features provided by Named Credentials. Named credentials can further be configured in to this framework to make things more configurable and secure.
 This allows to securely configure parameters to Endopint, header and body beyond what is configured in Named Credentails.
 
 

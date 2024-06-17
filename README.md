@@ -4,6 +4,8 @@ The Callout Config is a framework concept aimed at optimizing all callouts withi
 
 It's intended to complement Named Credentials and doesn't propose any alternatives to the features provided by Named Credentials.
 
+This allows to securely configure parameters to Endopint, header and body beyond what is configured in Named Credentails.
+
 ## Usage/Examples
 
 ![image](https://github.com/sfdcbox/CalloutConfig/assets/9331676/fcb8dff6-535b-404b-bde9-b85bbab54566)

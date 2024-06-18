@@ -8,7 +8,7 @@ This allows to securely configure parameters to Endopint, header and body beyond
 
 ## Documentation
 
-CalloutService - this class is where we request is created, callout is made, resopse is captured. This is where all the parsing methods will be added which can be used by all callouts. This is not dependent on the other class and can be used directly without using the CalloutConfigService class
+CalloutService - this class is where we request is created, callout is made, response is captured. This is where all the parsing methods will be added which can be used by all callouts. This is not dependent on the other class and can be used directly without using the CalloutConfigService class
 
 CalloutConfigService - this class creats CalloutService from the configurations created.
 this can handle Named Credentails cnfigured in to the configuration objects 
